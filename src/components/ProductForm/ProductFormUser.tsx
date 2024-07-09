@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Product } from "../../types";
+import { FormAddProductStock, InputForm, ButtonForm } from "./ProductForm.style";
 
 interface AddItemProps {
   addItem: (i: Product) => void;
@@ -10,7 +11,6 @@ function ProductFormUser({ addItem }: AddItemProps) {
   const [description, setDescriptionValue] = useState("");
   const [price, setPriceValue] = useState("");
   const [amount, setAmountValue] = useState("");
-  // const [item, setItem] = useState<Product[]>([]);
 
   const handleyAddList = () => {
     const newProducts = {
@@ -25,38 +25,38 @@ function ProductFormUser({ addItem }: AddItemProps) {
   };
 
   return (
-    <div>
+    <FormAddProductStock>
       <h1>Controle de Estoque</h1>
 
-      <input
+      <InputForm
         type="text"
         placeholder="Name"
         value={name}
         onChange={(e) => setNameValue(e.target.value)}
       />
 
-      <input
+      <InputForm
         type="text"
         placeholder="Description"
         value={description}
         onChange={(e) => setDescriptionValue(e.target.value)}
       />
 
-      <input
+      <InputForm
         type="text"
         placeholder="Price"
         value={price}
         onChange={(e) => setPriceValue(e.target.value)}
       />
-      <input
+      <InputForm
         type="text"
         placeholder="Amount"
         value={amount}
         onChange={(e) => setAmountValue(e.target.value)}
       />
 
-      <button onClick={handleyAddList}>Adicionar ao estoque</button>
-    </div>
+      <ButtonForm type="button" onClick={handleyAddList}>Adicionar ao estoque</ButtonForm>
+    </FormAddProductStock>
   );
 }
 
