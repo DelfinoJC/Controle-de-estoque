@@ -1,4 +1,5 @@
 import { Product } from "../../types";
+import { ProductItem } from '../ProductItem/ProductItem.style'
 
 interface ProductProps {
   product: Product;
@@ -7,7 +8,7 @@ interface ProductProps {
 
 function Stockitem({ product, removeFunction }: ProductProps) {
   return (
-    <>
+    <ProductItem>
       {product.name}
       {product.description}
       {product.amount}
@@ -15,7 +16,7 @@ function Stockitem({ product, removeFunction }: ProductProps) {
       <button type="button" onClick={() => removeFunction(product.id)}>
         Excluir
       </button>
-    </>
+    </ProductItem>
   );
 }
 
