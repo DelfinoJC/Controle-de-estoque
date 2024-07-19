@@ -2,13 +2,26 @@ import { useState } from "react";
 import ProductFormUser from "./components/ProductForm/ProductFormUser";
 import ListProduct from "./components/ProductList/ListProduct";
 import { Product } from "./types";
+import { ButtonMode, Container } from "./App.style";
+import { FaMoon, FaSun } from "react-icons/fa";
+import { useTheme } from "./context/themeContext";
 
 function App() {
   const [productStock, setProduct] = useState<Product[]>([]);
+  const [isDivApp, setIsDiv] = useState(true);
 
   const addItemStock = (item: Product) => {
     setProduct([...productStock, item]);
-    console.log(productStock)
+  };
+
+  const editItemOfList = (id: number) => {
+    // 1. qual item editar
+    productStock.map((i) => {
+      if(i.id === id){
+        console.log(id)
+      }
+    });
+    setIsDiv(!isDivApp);
   };
 
   const removeItemOfList = (id: number) => {
@@ -19,14 +32,25 @@ function App() {
     }
   };
 
+  const { modeMoment, handleModeMoment } = useTheme();
+
   return (
-    <div className="BigDivGlobal">
+    <Container themeMode={modeMoment}>
+      <ButtonMode
+        themeMode={modeMoment}
+        type="button"
+        onClick={handleModeMoment}
+      >
+        {modeMoment ? <FaSun /> : <FaMoon />}
+      </ButtonMode>
       <ProductFormUser addItem={addItemStock} />
       <ListProduct
+        isDivList={isDivApp}
         arrayItem={productStock}
         functionRemoveItemArray={removeItemOfList}
+        editItemFunction={editItemOfList}
       />
-    </div>
+    </Container>
   );
 }
 

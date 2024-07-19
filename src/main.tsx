@@ -1,11 +1,15 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import { GlobalStyle } from './style/GlobalStyles.ts'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.tsx";
+import { GlobalStyle } from "./style/GlobalStyles.ts";
+import { ThemeContextProvider } from "./context/themeContext.tsx";
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
-    <GlobalStyle/>
-  </React.StrictMode>,
-)
+    <ThemeContextProvider>
+      <App />
+    </ThemeContextProvider>
+
+    <GlobalStyle />
+  </React.StrictMode>
+);

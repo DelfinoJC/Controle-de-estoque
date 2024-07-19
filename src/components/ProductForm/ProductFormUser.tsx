@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Product } from "../../types";
 import { FormAddProductStock, InputForm, ButtonForm } from "./ProductForm.style";
+import { useTheme } from "../../context/themeContext";
 
 interface AddItemProps {
   addItem: (i: Product) => void;
@@ -24,8 +25,16 @@ function ProductFormUser({ addItem }: AddItemProps) {
     addItem(newProducts);
   };
 
+  // const  handleyChange = (e:  React.ChangeEvent<HTMLInputElement>) => {
+  //   setNameValue(e.target.value)
+  //   console.log(e)
+  // }
+  const { modeMoment, handleModeMoment } = useTheme();
+
   return (
-    <FormAddProductStock>
+
+
+    <FormAddProductStock themeMode={modeMoment}>
       <h1>Controle de Estoque</h1>
 
       <InputForm
@@ -55,7 +64,7 @@ function ProductFormUser({ addItem }: AddItemProps) {
         onChange={(e) => setAmountValue(e.target.value)}
       />
 
-      <ButtonForm type="button" onClick={handleyAddList}>Adicionar ao estoque</ButtonForm>
+      <ButtonForm  themeMode={modeMoment} type="button" onClick={handleyAddList}>Adicionar ao estoque</ButtonForm>
     </FormAddProductStock>
   );
 }
