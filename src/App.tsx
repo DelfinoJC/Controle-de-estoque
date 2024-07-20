@@ -8,21 +8,14 @@ import { useTheme } from "./context/themeContext";
 
 function App() {
   const [productStock, setProduct] = useState<Product[]>([]);
-  const [isDivApp, setIsDiv] = useState(true);
 
   const addItemStock = (item: Product) => {
     setProduct([...productStock, item]);
   };
 
-  const editItemOfList = (id: number) => {
-    // 1. qual item editar
-    productStock.map((i) => {
-      if(i.id === id){
-        console.log(id)
-      }
-    });
-    setIsDiv(!isDivApp);
-  };
+  const editItemOfList = (id: number, newItem: Product) => {
+    setProduct( productStock.map( (i) => i.id === id ? newItem : i ))
+  }; 
 
   const removeItemOfList = (id: number) => {
     const confirm = window.confirm("Quer mesmo excluir este produto ?");
@@ -45,7 +38,6 @@ function App() {
       </ButtonMode>
       <ProductFormUser addItem={addItemStock} />
       <ListProduct
-        isDivList={isDivApp}
         arrayItem={productStock}
         functionRemoveItemArray={removeItemOfList}
         editItemFunction={editItemOfList}

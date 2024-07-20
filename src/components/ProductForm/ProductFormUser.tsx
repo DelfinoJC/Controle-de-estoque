@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { Product } from "../../types";
-import { FormAddProductStock, InputForm, ButtonForm } from "./ProductForm.style";
+import {
+  FormAddProductStock,
+  InputForm,
+  ButtonForm,
+} from "./ProductForm.style";
 import { useTheme } from "../../context/themeContext";
 
 interface AddItemProps {
@@ -12,6 +16,7 @@ function ProductFormUser({ addItem }: AddItemProps) {
   const [description, setDescriptionValue] = useState("");
   const [price, setPriceValue] = useState("");
   const [amount, setAmountValue] = useState("");
+  const [selectItem, setItemSelect] = useState("");
 
   const handleyAddList = () => {
     const newProducts = {
@@ -20,6 +25,7 @@ function ProductFormUser({ addItem }: AddItemProps) {
       description,
       price,
       amount,
+      selectItem,
     };
 
     addItem(newProducts);
@@ -32,8 +38,6 @@ function ProductFormUser({ addItem }: AddItemProps) {
   const { modeMoment, handleModeMoment } = useTheme();
 
   return (
-
-
     <FormAddProductStock themeMode={modeMoment}>
       <h1>Controle de Estoque</h1>
 
@@ -64,7 +68,20 @@ function ProductFormUser({ addItem }: AddItemProps) {
         onChange={(e) => setAmountValue(e.target.value)}
       />
 
-      <ButtonForm  themeMode={modeMoment} type="button" onClick={handleyAddList}>Adicionar ao estoque</ButtonForm>
+      <select
+        value={selectItem}
+        onChange={(e) => setItemSelect(e.target.value)}
+      >
+        <option value="">Selecione um categoria</option>
+        <option value="comida">Comida</option>
+        <option value="eletronico">Eletronico</option>
+        <option value="movel">Movel</option>
+        <option value="nComida">Não é comida</option>
+      </select>
+
+      <ButtonForm themeMode={modeMoment} type="button" onClick={handleyAddList}>
+        Adicionar ao estoque
+      </ButtonForm>
     </FormAddProductStock>
   );
 }

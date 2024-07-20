@@ -10,14 +10,16 @@ import { useTheme } from "../../context/themeContext";
 
 interface ProductProps {
   product: Product;
-  isDiv: boolean;
+  isEditing: boolean;
+  idProductIdFunction: (i: number) => void;
   removeFunction: (i: number) => void;
-  editFunction: (i:number) => void;
+  editFunction: (i: number, newItem: Product) => void;
 }
 
 function Stockitem({
   product,
-  isDiv,
+  isEditing,
+  idProductIdFunction,
   removeFunction,
   editFunction,
 }: ProductProps) {
@@ -25,23 +27,27 @@ function Stockitem({
   const [description, setDescriptionValue] = useState("");
   const [price, setPriceValue] = useState("");
   const [amount, setAmountValue] = useState("");
+  const [selectItem, setSelectItem] = useState("");
+
+  const hadleEditProduct = () => {
+    if (isEditing) {
+      editFunction(product.id, {
+        ...product,
+        name,
+        description,
+        price,
+        amount,
+        selectItem,
+      });
+    }
+    idProductIdFunction(product.id);
+  };
 
   const { modeMoment, handleModeMoment } = useTheme();
 
   return (
     <ProductItem themeMode={modeMoment}>
-      {isDiv ? (
-        <ul>
-          <li>
-            <h2>{product.name}</h2>
-          </li>
-          <li>
-            <h4>R$ {product.price}</h4>
-          </li>
-          <li>{product.amount} und. disponíveis</li>
-          <li>{product.description}</li>
-        </ul>
-      ) : (
+      {isEditing ? (
         <>
           <ul>
             <li>
@@ -68,12 +74,34 @@ function Stockitem({
               value={price}
               onChange={(e) => setPriceValue(e.target.value)}
             />
+            <select
+              value={selectItem}
+              onChange={(e) => setSelectItem(e.target.value)}
+            >
+              <option value="">Selecione um categoria</option>
+              <option value="comida">Comida</option>
+              <option value="eletronico">Eletronico</option>
+              <option value="movel">Movel</option>
+              <option value="Não é comida">Não é comida</option>
+            </select>
           </ul>
         </>
+      ) : (
+        <ul>
+          <li>
+            <h2>{product.name}</h2>
+          </li>
+          <li>
+            <h4>R$ {product.price}</h4>
+          </li>
+          <li>{product.amount} und. disponíveis</li>
+          <li>{product.description}</li>
+          <li>{product.selectItem}</li>
+        </ul>
       )}
 
       <div>
-        <ButtonEditStyled type="button" onClick={() => editFunction(product.id)}>
+        <ButtonEditStyled type="button" onClick={hadleEditProduct}>
           <FaEdit></FaEdit>
         </ButtonEditStyled>
 
